@@ -33,6 +33,8 @@ def configure_settings():
             raise RuntimeError('Unsupported test DB {0}'.format(test_db))
 
         settings.configure(
+            TEST_RUNNER='django_nose.NoseTestSuiteRunner',
+            NOSE_ARGS=['--nocapture', '--nologcapture', '--verbosity=1'],
             DATABASES={
                 'default': db_config,
             },
@@ -41,10 +43,11 @@ def configure_settings():
                 'django.contrib.contenttypes',
                 'django.contrib.sessions',
                 'django.contrib.admin',
-                'south',
                 '{{ project_name }}',
                 '{{ project_name }}.tests',
             ),
             ROOT_URLCONF='{{ project_name }}.urls',
             DEBUG=False,
+            MIDDLEWARE_CLASSES=(),
+            DDF_FILL_NULLABLE_FIELDS=False,
         )
